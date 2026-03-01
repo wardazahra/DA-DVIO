@@ -1,0 +1,49 @@
+# config/kitti_dpvo_imu_final_fixed.yaml
+# Fixed KITTI config with proper noise parameters
+
+PATCHES_PER_FRAME: 96
+REMOVAL_WINDOW: 22
+OPTIMIZATION_WINDOW: 10
+PATCH_LIFETIME: 13
+KEYFRAME_THRESH: 15.0
+
+MOTION_MODEL: 'DAMPED_LINEAR'
+MOTION_DAMPING: 0.5
+
+MIXED_PRECISION: True
+PATCH_SELECTOR: 'scorer'
+NORM: 'none'
+
+SCORER_EVAL_MODE: 'multi'
+SCORER_EVAL_USE_GRID: True
+LOOP_CLOSURE: False
+BACKEND_THRESH: 48.0
+MAX_EDGE_AGE: 2000
+GLOBAL_OPT_FREQ: 25
+
+# ========== IMU SETTINGS ==========
+ENALBE_IMU: True
+ENALBE_INV: False
+
+
+# Identity transformation (working well with .mat data)
+# Real camera-IMU transformation from ZED calibration  
+Ti1c: [0.01474591, -0.00169408, 0.99988984, 0.02575494, -0.99988765, 0.00266864, 0.01475039, 0.01928873, -0.00269334, -0.999995, -0.00165454, 0.00278677, 0.0, 0.0, 0.0, 1.0]
+
+# Real IMU noise parameters from ZED firmware
+accel_noise_sigma: 0.1118
+gyro_noise_sigma: 0.03624
+accel_bias_sigma: 0.01951
+gyro_bias_sigma: 0.002933
+
+
+
+BUFFER_SIZE: 8192
+KEYFRAME_INDEX: 5
+CLASSIC_LOOP_CLOSURE: False
+CENTROID_SEL_STRAT: 'RANDOM'
+GRADIENT_BIAS: False
+
+base_strength: 0.08
+
+

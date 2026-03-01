@@ -1,0 +1,9 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/t2508/warda/dpvo/DPVO-main/DPViewer/build/temp.linux-x86_64-cpython-310/cmake_install.cmake",
+		"/home/t2508/warda/dpvo/DPVO-main/DPViewer/build/temp.linux-x86_64-cpython-310/pybind11/cmake_install.cmake",
+		"/home/t2508/warda/dpvo/DPVO-main/DPViewer/build/temp.linux-x86_64-cpython-310/dpviewer/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

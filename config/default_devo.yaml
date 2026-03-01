@@ -1,0 +1,33 @@
+### DEVO Config File ###
+
+# VO config (increase for better accuracy)
+PATCHES_PER_FRAME: 96
+REMOVAL_WINDOW: 22
+OPTIMIZATION_WINDOW: 10
+PATCH_LIFETIME: 13
+CENTROID_SEL_STRAT: 'RANDOM'
+# threshold for keyframe removal
+KEYFRAME_THRESH: 15.0
+
+# camera motion model
+MOTION_MODEL: 'DAMPED_LINEAR'
+MOTION_DAMPING: 0.5
+
+# maybe use mixed precision for inference
+MIXED_PRECISION: True
+
+# Select between random, gradient, scorer
+PATCH_SELECTOR: 'scorer'
+
+
+# Normalizer (only evs): none, rescale, standard (std)
+NORM: 'std'
+# Eval mode of patch selector (random, topk, multinomial)
+SCORER_EVAL_MODE: 'multi'
+SCORER_EVAL_USE_GRID: True
+
+# For proximity loop closure 
+LOOP_CLOSURE: True
+BACKEND_THRESH: 64.0
+MAX_EDGE_AGE: 1000
+GLOBAL_OPT_FREQ: 15 #每15帧进行一次全局优化

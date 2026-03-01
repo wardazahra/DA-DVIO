@@ -1,0 +1,61 @@
+# config/kitti_dpvo_imu_final_fixed.yaml
+# Fixed KITTI config with proper noise parameters
+
+PATCHES_PER_FRAME: 96
+REMOVAL_WINDOW: 22
+OPTIMIZATION_WINDOW: 10
+PATCH_LIFETIME: 13
+KEYFRAME_THRESH: 15.0
+
+MOTION_MODEL: 'DAMPED_LINEAR'
+MOTION_DAMPING: 0.5
+
+MIXED_PRECISION: True
+PATCH_SELECTOR: 'scorer'
+NORM: 'none'
+
+SCORER_EVAL_MODE: 'multi'
+SCORER_EVAL_USE_GRID: True
+LOOP_CLOSURE: False
+BACKEND_THRESH: 48.0
+MAX_EDGE_AGE: 2000
+GLOBAL_OPT_FREQ: 25
+
+# ========== IMU SETTINGS ==========
+ENALBE_IMU: True
+# Identity transformation (working well with .mat data)
+Ti1c: [1, 0, 0, 0, 0, 0,-1, 0,  0, 1, 0, 0, 0, 0, 0, 1]
+Ti1c: [-0.001088635, -0.999976347, 0.006787182, -0.382707853, -0.008512072, -0.006777671, -0.999940872, 0.734120531, 0.999963177, -0.001146343, -0.008504493, -1.138036161, 0.000000000, 0.000000000, 0.000000000, 1.000000000]
+
+ENALBE_INV: False
+
+
+#accel_noise_sigma: 1.0  # 08
+#gyro_noise_sigma: 0.1
+#accel_bias_sigma: 0.01
+#gyro_bias_sigma: 0.001
+
+#accel_noise_sigma: 0.316227766
+#gyro_noise_sigma: 0.1
+#accel_bias_sigma: 0.0316227766
+#gyro_bias_sigma: 0.001
+
+accel_noise_sigma: 0.1   # 20 mg
+gyro_noise_sigma: 0.01   # ~0.057 deg/s
+accel_bias_sigma: 0.001 # for 09,05
+gyro_bias_sigma: 0.0001
+
+
+
+
+
+
+BUFFER_SIZE: 8192
+KEYFRAME_INDEX: 5
+CLASSIC_LOOP_CLOSURE: False
+CENTROID_SEL_STRAT: 'RANDOM'
+GRADIENT_BIAS: False
+
+base_strength: 0.08
+
+

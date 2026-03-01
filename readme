@@ -1,0 +1,71 @@
+(DEIO) t2508@t2508-ASUSPRO-D640MB-M640MB:/media/t2508/C477-48FA/DEIO$ python script/eval_dpvo_imu/davis240c.py     --inputdir=/media/t2508/Tra/archive_dpvo_imu/     --config=config/davis240c.yaml     --network=dpvo.pth     --trials=1     --val_split=/media/t2508/Tra/archive_dpvo_imu/splits/boxes_rotation.txt
+ Running DPVO+IMU with config... 
+
+
+python script/eval_deio/davis240c.py     --inputdir=/media/t2508/Tra/archive_dpvo_imu/     --config=config/davis240c.yaml     --network=DEVO.pth     --trials=1     --val_split=/media/t2508/Tra/archive_dpvo_imu/splits/boxes_rotation.txt
+
+
+python script/eval_vo/davis240c.py     --inputdir=/media/t2508/Tra/archive_dpvo_imu/     --config=dpvo/config.py     --network=dpvo.pth     --trials=1     --val_split=/media/t2508/Tra/archive_dpvo_imu/splits/boxes_rotation.txt
+
+ evo_traj tum --ref /media/t2508/Tra/archive_dpvo_imu/boxes_rotation/gt_stamped_left.txt /media/t2508/C477-48FA/DEIO/results/debug/precheck_traj_est.txt -p -s
+
+python script/eval_evo/davis240c.py     --inputdir=/media/t2508/Tra/archive_dpvo_imu/     --config=config/default_devo.yaml     --network=dpvo.pth     --trials=1     --val_split=/media/t2508/Tra/archive_dpvo_imu/splits/boxes_translation.txt
+
+😀️ 
+export PYTHONPATH="/media/t2508/C477-48FA/DEIO:$PYTHONPATH"
+
+
+better one, without imu 
+python script/eval_deio/davis240c.py   --inputdir=/media/t2508/Tra/archive_dpvo_imu/   --config=config/davis240c_no_imu.yaml   --network=DEVO.pth   --trials=1   --val_split=script/splits/davis240c/davis240c_val.txt
+
+after execution, run bash run_alignment.sh
+
+
+ python script/eval_deio/davis240c.py     --inputdir=./data     --config=config/davis240c.yaml     --val_split=script/splits/davis240c/davis240c_val.txt       --network=DEVO.pth      --plot     --save_trajectory     --trials=5 --enable_event
+
+DPVO+IMU:
+ python script/eval_dvio/davis240c.py     --inputdir=./data     --config=config/davis240c_dpvo.yaml     --val_split=script/splits/davis240c/davis240c_val.txt       --network=dpvo.pth         --trials=2             --enable_imu 
+
+
+ python script/euroc/evaluate_euroc_imu.py     --config=config/euroc_imu.yaml     --network=dpvo.pth     --eurocdir=/media/t2508/Tra/     --trials=1     --plot     --save_trajectory 
+
+
+python script/kitti/evaluate_kitti.py     --processed_kittidir /media/t2508/Tra/KITTI_processed     --network dpvo.pth     --config config/kitti_dpvo_imu.yaml     --sequences 0 --trials 1 --stride 2 
+
+the correct DBA file for complete IMU integration working is in devo/dba_correct_imu.py - copy it to dba and run evaluate_kitti_depth.py -- the IMU config params for that are # ========== IMU SETTINGS ==========
+ENALBE_IMU: True
+
+# Identity transformation (working well with .mat data)
+Ti1c: [1, 0, 0, 0, 0, 0,-1, 0,  0, 1, 0, 0, 0, 0, 0, 1]
+
+#Ti1c: [1, 0, 0, 0, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1]
+
+
+
+ENALBE_INV: True
+
+#accel_noise_sigma: 1.0
+#gyro_noise_sigma: 0.1
+#accel_bias_sigma: 0.01
+#gyro_bias_sigma: 0.001
+
+
+run command ☺️
+ python script/kitti/evaluate_kitti_depth_patched.py --sequences 7 --processed_kittidir /media/t2508/C477-48FA/KITTI_processed --network dpvo.pth --config config/kitti_dpvo_imu.yaml --psmnet_dir /media/t2508/C477-48FA/PSMNet/output/old/07/depth_maps/ --save_trajectory
+
+ 
+ for zed data, we have the file dba_zed.py- which has only options for with and without imu- no depth yet
+
+python script/zed/evaluate_zed_no_gt.py     --processed_dir /media/t2508/C477-48FA/DEIO/zed_data/deio_format_zed2_2nd/     --config /media/t2508/C477-48FA/DEIO/config/zed_imu.yaml     --network dpvo.pth     --stride 2     --plot --save_trajectory
+
+
+python script/zed/evaluate_zed_depth.py     --processed_dir /media/t2508/C477-48FA/DEIO/zed_data/deio_format_zed2_2nd/     --config /media/t2508/C477-48FA/DEIO/config/zed_imu.yaml     --network dpvo.pth     --stride 2     --depth_dir /media/t2508/C477-48FA/PSMNet/depth_output_zed2_2nd/depth --save_trajectory
+
+
+do not plot yaw just with matpot lib- use evo serialize to save aligned yaw plots and than plot via matplotlib
+
+
+
+python run_dba_realtime.py     --processed_dir /media/t2508/C477-48FA/DEIO/zed_data/z11/     --config /media/t2508/C477-48FA/DEIO/config/zed_imu.yaml     --network checkpoints/dpvo_v2_zed.pth     --stride 2     --depth_dir /media/t2508/Tra/z11/mav0/depth_real         --output_video z11_realtime.mp4     --save_trajectory --gt_file /media/t2508/C477-48FA/DEIO/saved_trajectories/zed_trajs_correct/z11_gps_gt.txt
+✅ Imported data loaders from evaluate_zed
+

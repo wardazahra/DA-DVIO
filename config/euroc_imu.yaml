@@ -1,0 +1,76 @@
+# config/euroc_dpvo_imu_vi_init.yaml
+# EuRoC DPVO+IMU config optimized for VI initialization
+
+### DPVO Config File (Images + IMU) ###
+
+# VO config (more conservative for initialization)
+PATCHES_PER_FRAME: 96       # Start with fewer patches
+REMOVAL_WINDOW: 18          # Shorter window during init
+OPTIMIZATION_WINDOW: 8      # Smaller window for faster convergence  
+PATCH_LIFETIME: 12          # Shorter lifetime initially
+KEYFRAME_THRESH: 18.0       # More liberal keyframe selection
+
+# Camera motion model
+MOTION_MODEL: 'DAMPED_LINEAR'
+MOTION_DAMPING: 0.7         # More damping for stability
+
+# Mixed precision for faster inference
+MIXED_PRECISION: True
+
+# Patch selection strategy
+PATCH_SELECTOR: 'scorer'
+
+# ========== FOR IMAGES (NOT EVENTS) ==========
+NORM: 'none'  # No event normalization for images
+
+# ========== LOOP CLOSURE SETTINGS ==========
+SCORER_EVAL_MODE: 'multi'
+SCORER_EVAL_USE_GRID: True
+
+# Loop closure (disable during initialization)
+LOOP_CLOSURE: False
+BACKEND_THRESH: 32.0        # Lower threshold for easier initialization
+MAX_EDGE_AGE: 800           # Shorter edge age
+GLOBAL_OPT_FREQ: 30         # Less frequent global optimization
+
+# ========== IMU SETTINGS ==========
+ENALBE_IMU: False
+
+# Camera-IMU extrinsics (loaded per sequence)
+Ti1c: [0.0148655429818, -0.999880929698, 0.00414029679422, -0.0216401454975,
+       0.999557249008, 0.0149672133247, 0.025715529948, -0.064676986768,
+       -0.0257744366974, 0.00375618835797, 0.999660727178, 0.00981073058949,
+       0.0, 0.0, 0.0, 1.0]
+
+ENALBE_INV: True
+
+# MORE PERMISSIVE IMU noise parameters for easier initialization
+#accel_noise_sigma: 0.008       # Increased from 0.002 (more lenient)
+#gyro_noise_sigma: 0.0008       # Increased from 0.00016968 (more lenient)  
+#accel_bias_sigma: 0.01         # Increased from 0.003 (more uncertainty)
+#gyro_bias_sigma: 0.0001        # Increased from 1.9393e-05 (more uncertainty)
+
+
+accel_noise_sigma: 2.0000e-3
+gyro_noise_sigma: 1.6968e-04
+accel_bias_sigma:  3.0000e-3
+gyro_bias_sigma: 1.9393e-05
+# ========== VI INITIALIZATION SETTINGS ==========
+# These may need to be adjusted based on DEIO's specific parameters
+
+# Buffer and memory (smaller for initialization)
+BUFFER_SIZE: 2048           # Smaller buffer initially
+KEYFRAME_INDEX: 4           # Standard keyframe checking
+
+# ========== INITIALIZATION HINTS ==========
+# - Make sure there's sufficient rotation in the first 10-20 frames
+# - Try processing from frame 50+ if initialization fails
+# - Consider increasing stride initially (stride=4) then switching to stride=2
+
+# ========== OTHER SETTINGS ==========
+CLASSIC_LOOP_CLOSURE: False
+CENTROID_SEL_STRAT: 'RANDOM'
+GRADIENT_BIAS: False
+
+# ========== DEBUGGING ==========
+# Enable any debug flags available in DEIO for VI initialization
