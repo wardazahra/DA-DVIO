@@ -109,6 +109,11 @@ Download the KITTI odometry dataset from the [official website](https://www.cvli
 - Ground truth poses
 - Calibration files
 
+### ZED Custom Dataset
+
+ZED dataset can be downloaded from kaggle in preprocessed form
+https://www.kaggle.com/datasets/wardazahra/ntust-zed-dataset
+
 Expected structure:
 ```
 kitti_odometry/
